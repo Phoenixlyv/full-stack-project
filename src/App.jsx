@@ -59,9 +59,9 @@ function App() {
         />
         <button>Add Player</button>
       </form>
-      <h2>Players</h2>
+      <h2>Players ({players.length})</h2>
       <ul>
-        {players.map((player) => (
+        {players.sort((a, b) => a.number - b.number).map((player) => (
           <li key={player.id}>
             #{player.number} {player.name} – {player.position}
             <button onClick={() => deletePlayer(player.id)}>Delete</button>
