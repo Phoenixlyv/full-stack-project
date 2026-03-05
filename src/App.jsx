@@ -1,26 +1,16 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [players, setPlayers] = useState([{
-    id: crypto.randomUUID(),
-    number: "13",
-    name: "Player 1",
-    position: "Defender"
-  }, {
-    id: crypto.randomUUID(),
-    number: "14",
-    name: "Player 2",
-    position: "Striker"
-  }]);
+  const [players, setPlayers] = useState([]);
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
   const [number, setNumber] = useState("");
 
   const loadPlayers = () => {
 
-    // fetch("http://localhost:3000/players")
-    //   .then((res) => res.json())
-    //   .then((data) => setPlayers(data));
+    fetch("http://localhost:3000/players")
+    .then((res) => res.json())
+    .then((data) => setPlayers(data));
   };
 
   useEffect(() => {
@@ -30,30 +20,21 @@ function App() {
   const addPlayer = async (e) => {
     e.preventDefault();
 
-    console.log({id: crypto.randomUUID(), number: number, name: name, position: position});
-
-    setPlayers(prevPlayers => {
-      return [...prevPlayers, {id: crypto.randomUUID(), number: number, name: name, position: position}];
-    } );
-
-    console.log(players);
-
-    /* await fetch("http://localhost:3000/players", {
+    await fetch("http://localhost:3000/players", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, position, number }),
-    }); */
+    });
     loadPlayers();
   };
 
   const deletePlayer = async (id) => {
-    /* await fetch(`http://localhost:3000/players/${id}`, {
+    await fetch(`http://localhost:3000/players/${id}`, {
       method: "DELETE",
-    }); */
+    });
 
-    setPlayers(players.filter(player => player.id !== id));
     loadPlayers();
   };
 
